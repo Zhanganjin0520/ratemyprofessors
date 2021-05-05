@@ -11,7 +11,7 @@ def get_professors_comment_by_node_id(teacher_node_id):
     }
     comment_request['variables']['id'] = teacher_node_id
     headers = {'Authorization': 'Basic dGVzdDp0ZXN0'}
-    professors_comment_res = requests.post(professors_comment_url, json=comment_request, headers=headers)
+    professors_comment_res = requests.post(professors_comment_url, json=comment_request, headers=headers, timeout=10)
 
     professors_comment_data = json.loads(professors_comment_res.text)
     ratings = professors_comment_data['data']['node']['ratings']['edges']
@@ -27,7 +27,8 @@ def get_professors_comment_by_node_id(teacher_node_id):
         quality = rate_node['clarityRating']
         difficulty = rate_node['difficultyRating']
         helpful_rate = rate_node['helpfulRating']
-        comment_obj = (professor_node_id, comment_node_id, professor_class, quality, helpful_rate, difficulty, comment,date)
+        comment_obj = (
+        professor_node_id, comment_node_id, professor_class, quality, helpful_rate, difficulty, comment, date)
         professors_comment_array.append(comment_obj)
 
     mysql_handle.insert_professors_comments(professors_comment_array)

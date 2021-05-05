@@ -52,7 +52,7 @@ def get_professors(first_name):
     # teacher query request headers
     headers = {'Authorization': 'Basic dGVzdDp0ZXN0'}
     # post request
-    teacher_data_res = requests.post(teacher_data_url, json=teacher_data_request, headers=headers)
+    teacher_data_res = requests.post(teacher_data_url, json=teacher_data_request, headers=headers, timeout=20)
     professors_arrays = []
     if teacher_data_res.status_code == 200:
         # to handle response data
